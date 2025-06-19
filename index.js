@@ -9,7 +9,10 @@ client.on('ready', async () => {
     
     async function bump() {
         await channel.sendSlash('302050872383242240', 'bump')
-        console.count('Bumped!')
+        console.count('Disboard Bumped!')
+
+        await channel.sendSlash('761562078095867916', 'up')
+        console.count('Dissoku Bumped!')
     }
 
     function loop() {
