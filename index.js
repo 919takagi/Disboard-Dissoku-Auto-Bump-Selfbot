@@ -5,14 +5,32 @@ const client = new Client()
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`)
 
-    const channel = await client.channels.fetch(process.env.BUMP_CHANNEL)
-    
-    async function bump() {
-        await channel.sendSlash('302050872383242240', 'bump')
-        console.count('Disboard Bumped!')
+    if (!process.env.BUMP_CHANNELS) {
+        console.error('Please set the BUMP_CHANNELS environment variable.')
+        return;
+    }
 
-        await channel.sendSlash('761562078095867916', 'up')
-        console.count('Dissoku Bumped!')
+    const channels = process.env.BUMP_CHANNELS.split(',')
+
+    if (!channels.length) {
+        console.error('Please set the BUMP_CHANNELS environment variable.')
+        return;
+    }
+        
+    async function bump() {
+        for (const channelId of channels) {
+            const channel = await client.channels.fetch(channelId.trim());
+            if (!channel) {
+                console.error(`Channel not found: ${channelId}`);
+                continue;
+            }
+
+            await channel.sendSlash('302050872383242240', 'bump');
+            console.count('Disboard Bumped!');
+
+            await channel.sendSlash('761562078095867916', 'up');
+            console.count('Dissoku Bumped!');
+        }
     }
 
     function loop() {
