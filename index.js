@@ -13,7 +13,7 @@ client.on('ready', async () => {
     const channels = process.env.BUMP_CHANNELS.split(',')
 
     if (!channels.length) {
-        console.error('Please set the BUMP_CHANNELS environment variable.')
+        console.error('No channels specified in BUMP_CHANNELS environment variable.')
         return;
     }
         
